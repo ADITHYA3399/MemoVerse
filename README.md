@@ -6,9 +6,9 @@ NERELLA ADITHYA - 20BCE7473</br>
 * Week-03: https://drive.google.com/drive/folders/195aMWcDWb5SVZrGsMNXlv3YcyhZyzqsm?usp=sharing </br></br>
 
 MADDIKERI NARENDRANATH REDDY - 20BCE7114</br>
-* WeeK-01: https://drive.google.com/file/d/1z1CV8UWfL7fEhzsAAPtR3swIVDtiqBEr/view?usp=sharing </br>
-* Week-02:  </br>
-* Week-03: https://drive.google.com/file/d/1_aPJFF1Sag7BfYF0NTOmmd5JvoooYvMV/view?usp=sharing </br></br>
+* WeeK-01: https://drive.google.com/file/d/1CQDyfZ5tRNHfGsz4P-bHSLd4rsjWuIFc/view?usp=sharing</br>
+* Week-02: https://drive.google.com/file/d/1thzjVd3DFuvDAhDHainZkofKYg2TfS8Y/view?usp=sharing </br>
+* Week-03: https://drive.google.com/file/d/1QCv2N7daPX3aIZo48Bf-EIEiBfAK9p40/view?usp=sharing </br></br>
 
 AYAN SAMANTHA - </br>
 * WeeK-01:  </br>
