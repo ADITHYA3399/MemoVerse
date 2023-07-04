@@ -18,7 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -52,15 +55,31 @@ class RegisterActivity : ComponentActivity() {
 @Composable
 fun RegistrationScreen(context: Context, databaseHelper: UserDatabaseHelper) {
 
-    Image(
-        painterResource(id = R.drawable.memoverseloginbg), contentDescription = "",
-        contentScale = ContentScale.FillBounds,
-    )
+//    Image(
+//        painterResource(id = R.drawable.memoverseloginbg), contentDescription = "",
+//        contentScale = ContentScale.FillBounds,
+//    )
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
+    val pontano = FontFamily(
+        Font(R.font.pontanosansregular),
+        Font(R.font.pontanosanbold, FontWeight.Bold)
+    )
+    val Typography = Typography(
+        h1 = TextStyle(
+            fontFamily = pontano,
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp
+        ),
+        body1 = TextStyle(
+            fontFamily = pontano,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp
+        ),
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -71,48 +90,48 @@ fun RegistrationScreen(context: Context, databaseHelper: UserDatabaseHelper) {
         Text(
             fontSize = 35.sp,
             fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Monospace,
-            color = Color.Green,
-            text = "Sign Up"
+            style = MaterialTheme.typography.h1,
+            color = colorResource(id = R.color.mainbg),
+            text = "Sign-Up"
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(value = username, onValueChange = {username = it},
-            label = { Text("Username")},
+            label = { Text("Username",style = MaterialTheme.typography.body1)},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             leadingIcon = {Icon(Icons.Outlined.Person, contentDescription = null)},
             modifier = Modifier
                 .width(280.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.White,
+                focusedBorderColor = colorResource(id = R.color.mainbg),
                 unfocusedBorderColor = Color.Gray,
-                focusedLabelColor = Color.White,
+                focusedLabelColor = colorResource(id = R.color.mainbg),
                 unfocusedLabelColor = Color.Gray,
-                leadingIconColor = Color.White,
-                textColor = Color.White
+                leadingIconColor = colorResource(id = R.color.mainbg),
+                textColor = Color.Black
             )
 
         )
         OutlinedTextField(value = email, onValueChange = {email = it},
-            label = { Text("Email")},
+            label = { Text("Email",style = MaterialTheme.typography.body1,)},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             leadingIcon = {Icon(Icons.Outlined.Person, contentDescription = null)},
             modifier = Modifier
                 .width(280.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.White,
+                focusedBorderColor = colorResource(id = R.color.mainbg),
                 unfocusedBorderColor = Color.Gray,
-                focusedLabelColor = Color.White,
+                focusedLabelColor = colorResource(id = R.color.mainbg),
                 unfocusedLabelColor = Color.Gray,
-                leadingIconColor = Color.White,
-                textColor = Color.White
+                leadingIconColor = colorResource(id = R.color.mainbg),
+                textColor = Color.Black
             )
 
         )
         var showPassword by remember { mutableStateOf(value = false) }
         OutlinedTextField(value = password, onValueChange = {password = it},
-            label = { Text("Password")},
+            label = { Text("Password", style = MaterialTheme.typography.body1,)},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             leadingIcon = {Icon(Icons.Outlined.Lock, contentDescription = null)},
             modifier = Modifier
@@ -120,22 +139,22 @@ fun RegistrationScreen(context: Context, databaseHelper: UserDatabaseHelper) {
             visualTransformation = if (showPassword) VisualTransformation.None
             else PasswordVisualTransformation(),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.White,
+                focusedBorderColor = colorResource(id = R.color.mainbg),
                 unfocusedBorderColor = Color.Gray,
-                focusedLabelColor = Color.White,
+                focusedLabelColor = colorResource(id = R.color.mainbg),
                 unfocusedLabelColor = Color.Gray,
-                leadingIconColor = Color.White,
-                textColor = Color.White,
-                trailingIconColor = Color.Gray
+                leadingIconColor = colorResource(id = R.color.mainbg),
+                textColor = Color.Black,
+                trailingIconColor = colorResource(id = R.color.mainbg),
             ),
             trailingIcon = {
                 if (showPassword) {
                     TextButton(onClick = { showPassword = false }) {
-                        Text(text = "hide", color = Color.White)
+                        Text(text = "hide", color = colorResource(id = R.color.mainbg), style = MaterialTheme.typography.body1,)
                     }
                 } else {
                     TextButton(onClick = { showPassword = true }) {
-                        Text(text = "show", color = Color.White)
+                        Text(text = "show", color = colorResource(id = R.color.mainbg), style = MaterialTheme.typography.body1,)
                     }
                 }
             }
@@ -159,7 +178,7 @@ fun RegistrationScreen(context: Context, databaseHelper: UserDatabaseHelper) {
                     context.startActivity(
                         Intent(
                             context,
-                            LoginActivity::class.java
+                            MainActivity::class.java
                         )
                     )
 
@@ -167,17 +186,18 @@ fun RegistrationScreen(context: Context, databaseHelper: UserDatabaseHelper) {
                     error = "Please fill all fields"
                 }
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green),
+            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.mainbg)),
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .padding(5.dp)
                 .width(150.dp)
                 .height(40.dp)
         ) {
-            Text(text = "Sign In",
-                color = Color.Black,
+            Text(text = "Sign-Up",
+                color = Color.White,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                style = MaterialTheme.typography.body1,
             )
         }
         Spacer(modifier = Modifier.width(10.dp))
@@ -192,13 +212,13 @@ fun RegistrationScreen(context: Context, databaseHelper: UserDatabaseHelper) {
 
         Row() {
             Text(
-                modifier = Modifier.padding(top = 14.dp), text = "Have an account?", color = Color.White
+                modifier = Modifier.padding(top = 14.dp), text = "Have an account?", color = Color.Black, style = MaterialTheme.typography.body1,
             )
             TextButton(onClick = {
                 context.startActivity(Intent(context, LoginActivity::class.java))
             }) {
                 Spacer(modifier = Modifier.width(10.dp))
-                Text(text = "Sign in", color = Color.Green)
+                Text(text = "Sign-in", color = colorResource(id = R.color.mainbg), style = MaterialTheme.typography.body1,)
             }
         }
     }

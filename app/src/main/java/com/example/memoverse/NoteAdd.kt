@@ -26,8 +26,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -76,7 +79,7 @@ class NoteAdd : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = Color.Black)
+                            .background(color = Color.White)
                     ) {
                         NoteAddScreen(context = this@NoteAdd, databaseHelper = databaseHelper)
                     }
@@ -214,76 +217,90 @@ class NoteAdd : ComponentActivity() {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(10.dp)
         ) {
-            Text(
-                fontSize = 30.sp,
-                fontWeight = FontWeight.ExtraBold,
-                fontFamily = FontFamily.Monospace,
-                color = Color.Green,
-                text = "Memories of the Day"
-            )
-
-            OutlinedTextField(
-                value = title, onValueChange = { title = it },
-                label = { Text("Title") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.Gray,
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray,
-                    textColor = Color.White
-                )
-
-            )
-
-
-            OutlinedTextField(
-                value = summary, onValueChange = { summary = it },
-                label = { Text("Memory I had was") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            Card (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.Gray,
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray,
-                    textColor = Color.White
-                )
-            )
+                    .padding(10.dp),
+                shape = RoundedCornerShape(9.dp),
+                elevation = 5.dp
+            ){
+                Box(modifier = Modifier
+                    .background(color = colorResource(id = R.color.bodybg)).padding(10.dp)) {
+                    Column {
+                        Text(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            style = MaterialTheme.typography.h1,
+                            color = colorResource(id = R.color.mainbg),
+                            text = "Memories of the Day"
+                        )
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.End)
-            ) {
-                Spacer(modifier = Modifier.width(150.dp))
-                IconButton(onClick = {
-                    /* Open gallery and select picture*/
-                    openGallery()
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_image_24),
-                        contentDescription = "picture",
-                        modifier = Modifier.padding(10.dp)
-                    )
+                        OutlinedTextField(
+                            value = title, onValueChange = { title = it },
+                            label = { Text("Title", style = MaterialTheme.typography.body1) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = colorResource(id = R.color.mainbg),
+                                unfocusedBorderColor = Color.Gray,
+                                focusedLabelColor = colorResource(id = R.color.mainbg),
+                                unfocusedLabelColor = Color.Gray,
+                                textColor = Color.Black
+                            )
+
+                        )
+
+
+                        OutlinedTextField(
+                            value = summary, onValueChange = { summary = it },
+                            label = { Text("Memory I had was", style = MaterialTheme.typography.body1) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = colorResource(id = R.color.mainbg),
+                                unfocusedBorderColor = Color.Gray,
+                                focusedLabelColor = colorResource(id = R.color.mainbg),
+                                unfocusedLabelColor = Color.Gray,
+                                textColor = Color.Black
+                            )
+                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(alignment = Alignment.End)
+                        ) {
+                            Spacer(modifier = Modifier.width(150.dp))
+                            IconButton(onClick = {
+                                /* Open gallery and select picture*/
+                                openGallery()
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_image_24),
+                                    contentDescription = "picture",
+                                    modifier = Modifier.padding(10.dp)
+                                )
+                            }
+                            IconButton(onClick = {
+                                openCamera()
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_camera_alt_24),
+                                    contentDescription = "camera",
+                                    modifier = Modifier.padding(10.dp)
+                                )
+                            }
+                            //Image(painter = painterResource(id = R.drawable.ic_baseline_mic_24), contentDescription = "audio", modifier = Modifier.padding(10.dp))
+                            //Image(painter = painterResource(id = R.drawable.ic_baseline_videocam_24), contentDescription = "video", modifier = Modifier.padding(10.dp))
+                        }
+                    }
                 }
-                IconButton(onClick = {
-                    openCamera()
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_camera_alt_24),
-                        contentDescription = "camera",
-                        modifier = Modifier.padding(10.dp)
-                    )
-                }
-                //Image(painter = painterResource(id = R.drawable.ic_baseline_mic_24), contentDescription = "audio", modifier = Modifier.padding(10.dp))
-                //Image(painter = painterResource(id = R.drawable.ic_baseline_videocam_24), contentDescription = "video", modifier = Modifier.padding(10.dp))
             }
+
 
             Spacer(modifier = Modifier.height(20.dp))
             Row(
@@ -295,7 +312,7 @@ class NoteAdd : ComponentActivity() {
                     onClick = {
                         context.startActivity(Intent(context, MainActivity::class.java))
                     },
-                    border = BorderStroke(1.dp, Color.Green),
+                    border = BorderStroke(1.dp, colorResource(id = R.color.mainbg)),
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
                     shape = RoundedCornerShape(20.dp),
                     modifier = Modifier
@@ -305,9 +322,10 @@ class NoteAdd : ComponentActivity() {
                 ) {
                     Text(
                         text = "Cancel",
-                        color = Color.Black,
+                        color = colorResource(id = R.color.mainbg),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        style = MaterialTheme.typography.body1
                     )
                 }
 
@@ -336,7 +354,7 @@ class NoteAdd : ComponentActivity() {
                             error = "Please fill all fields"
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.mainbg)),
                     shape = RoundedCornerShape(20.dp),
                     modifier = Modifier
                         .padding(5.dp)
@@ -345,9 +363,10 @@ class NoteAdd : ComponentActivity() {
                 ) {
                     Text(
                         text = "Save",
-                        color = Color.Black,
+                        color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        style = MaterialTheme.typography.body1
                     )
                 }
 

@@ -6,39 +6,21 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.DatePicker
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -58,8 +40,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.example.memoverse.ui.theme.MemoVerseTheme
 import java.io.ByteArrayInputStream
 import java.util.Calendar
@@ -67,9 +51,11 @@ import java.util.Date
 
 
 private var DATE_ENTERED : String? = null
-private lateinit var SELECTED_DATE : String
+//private lateinit var SELECTED_DATE : String
+val SELECTED_DATE = mutableStateOf("")
 var ARRAY_NOTES by mutableStateOf(mutableStateListOf<Note>())
 private lateinit var note_database_helper : NoteDatabaseHelper
+private var datesending = ""
 
 class MainActivity : ComponentActivity() {
     private lateinit var databaseHelper: NoteDatabaseHelper
@@ -84,15 +70,18 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = colorResource(id = R.color.top2)
+                    color = Color.White
                 ) {
                     var mDate = remember { mutableStateOf("") }
                     val scaffoldState = rememberScaffoldState()
                     val scope = rememberCoroutineScope()
                     val context = LocalContext.current
 
+
+
                     Scaffold(
                         scaffoldState = scaffoldState,
+                        modifier = Modifier.background(Color.White),
                         floatingActionButton = {
                             Column (modifier = Modifier){
                                 addFab()
@@ -103,8 +92,8 @@ class MainActivity : ComponentActivity() {
                         },
                         topBar = {
                             TopAppBar(
-                                title = { Text(text = "MemoVerse") },
-                                backgroundColor = colorResource(id = R.color.top1)
+                                title = { Text(text = "MemoVerse", style = MaterialTheme.typography.body1, color = Color.White) },
+                                backgroundColor = colorResource(id = R.color.mainbg)
                             )
                         }
                     ) {
@@ -112,10 +101,10 @@ class MainActivity : ComponentActivity() {
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(color = Color.Black)) {
+                                .background(color = Color.White)) {
                             //Datepicking()
 
-                            var notesList : ArrayList<Note>? = note_database_helper.getNoteByDate("2023-07-02")
+                            var notesList : ArrayList<Note>? = note_database_helper.getNoteByDate("2023-07-04")
                             ARRAY_NOTES.clear()
                             if (notesList != null) {
                                 ARRAY_NOTES.addAll(notesList)
@@ -179,7 +168,7 @@ fun ExpandableFab(context: Context) {
                     onClick = {
 
                     },
-                    backgroundColor = colorResource(id = R.color.top3)
+                    backgroundColor = colorResource(id = R.color.mainbg)
                 )
 
                 ExtendedFloatingActionButton(
@@ -196,7 +185,7 @@ fun ExpandableFab(context: Context) {
                     onClick = {
 
                     },
-                    backgroundColor = colorResource(id = R.color.top3)
+                    backgroundColor = colorResource(id = R.color.mainbg)
                 )
             }
         }
@@ -219,18 +208,31 @@ fun ImageCard(
         elevation = 5.dp
     ){
         Box(modifier = Modifier
-            .height(200.dp)
-            .background(color = colorResource(id = R.color.top4))) {
+            .background(color = colorResource(id = R.color.bodybg))) {
             Column {
-                Text(title, style = TextStyle(color = Color.White, fontSize = 20.sp),modifier = Modifier.padding(5.dp))
-                Text(summary, style = TextStyle(color = Color.White, fontSize = 16.sp),modifier = Modifier.padding(5.dp))
+                Text(title, color = Color.Black,fontSize = 20.sp, style = MaterialTheme.typography.body1,modifier = Modifier.padding(5.dp))
+                Text(summary, color = Color.Black,fontSize = 15.sp, style = MaterialTheme.typography.body1,modifier = Modifier.padding(5.dp))
 
-                Image(bitmap = Image,
-                    contentDescription = "image",
-                    contentScale = ContentScale.FillWidth, modifier = Modifier
-                        .fillMaxSize()
-                        .padding(10.dp)
-                )
+                var popupControl by remember { mutableStateOf(false) }
+                Button(onClick = { popupControl = true },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.mainbg)),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text("Image", color = Color.White)
+                }
+
+                if (popupControl) {
+                    Popup(
+                        alignment = Alignment.CenterStart,
+                        offset = IntOffset(0, 700),
+                        onDismissRequest = { popupControl = false },
+                    ) {
+                        Image(bitmap = Image,
+                            contentDescription = "image"
+                        )
+                    }
+                }
+
             }
         }
     }
@@ -257,7 +259,7 @@ fun byteArrayToImageBitmap(byteArray: ByteArray): ImageBitmap? {
     return bitmap?.asImageBitmap()
 }
 
-var datesending = ""
+
 @Composable
 fun Datepicking(){
     val mContext = LocalContext.current
@@ -309,13 +311,13 @@ fun addFab(){
     val context = LocalContext.current
     ExtendedFloatingActionButton(
         text = {
-            Text(text = "Add a note", color = Color.Black)
+            Text(text = "Add a note", color = Color.White)
         },
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_baseline_note_add_24),
                 contentDescription = "Navigate FAB",
-                tint = Color.Black,
+                tint = Color.White,
             )
         },
         onClick = {
@@ -324,7 +326,7 @@ fun addFab(){
             intent.putExtra("Datesending", currentDate)
             context.startActivity(intent)
         },
-        backgroundColor = colorResource(id = R.color.top3)
+        backgroundColor = colorResource(id = R.color.mainbg)
     )
 }
 
@@ -347,29 +349,32 @@ fun dateFab(){
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mYear-${mMonth+1}-$mDayOfMonth"
+            val formattedMonth = (mMonth + 1).toString().padStart(2, '0')
+            val formattedDay = mDayOfMonth.toString().padStart(2, '0')
+            mDate.value = "$mYear-$formattedMonth-$formattedDay"
+            //mDate.value = "$mYear-${mMonth+1}-$mDayOfMonth"
         }, mYear, mMonth, mDay
     )
 
-    SELECTED_DATE = mDate.toString()
+    SELECTED_DATE.value = mDate.toString()
     mDatePickerDialog.datePicker.maxDate = mCalendar.timeInMillis
 
     ExtendedFloatingActionButton(
         text = {
-            Text(text = "Select Date", color = Color.Black)
+            Text(text = "Select Date", color = Color.White)
         },
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_date_range_24),
                 contentDescription = "Navigate FAB",
-                tint = Color.Black,
+                tint = Color.White,
             )
         },
         onClick = {
             mDatePickerDialog.show()
-            updateNoteList(SELECTED_DATE)
+            updateNoteList(SELECTED_DATE.value)
         },
-        backgroundColor = colorResource(id = R.color.top3)
+        backgroundColor = colorResource(id = R.color.mainbg)
     )
 }
 

@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +31,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.material.Icon
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 //import androidx.compose.material.icons.filled.Visibility  // ok
 //import androidx.compose.material.icons.filled.VisibiltyOff // ok
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.memoverse.ui.theme.MemoVerseTheme
+import kotlin.text.Typography
 
 class LoginActivity : ComponentActivity() {
     private lateinit var databaseHelper: UserDatabaseHelper
@@ -63,17 +68,35 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
     var _passwordVisible = false
-    Image(
-        painterResource(id = R.drawable.memoverseloginbg), contentDescription = "",
-        contentScale = ContentScale.FillBounds,
-        )
+//    Image(
+//        painterResource(id = R.drawable.memoverseloginbg), contentDescription = "",
+//        contentScale = ContentScale.FillBounds,
+//        )
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
 
+    val pontano = FontFamily(
+        Font(R.font.pontanosansregular),
+        Font(R.font.pontanosanbold, FontWeight.Bold)
+    )
+    val Typography = Typography(
+        h1 = TextStyle(
+            fontFamily = pontano,
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp
+        ),
+        body1 = TextStyle(
+            fontFamily = pontano,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp
+        ),
+    )
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -82,30 +105,30 @@ fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
         Text(
             fontSize = 35.sp,
             fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Monospace,
-            color = Color.Green,
-            text = "Sign In"
+            style = MaterialTheme.typography.h1,
+            color = colorResource(id = R.color.mainbg),
+            text = "Sign-In"
         )
         Spacer(modifier = Modifier.height(30.dp))
         OutlinedTextField(value = username, onValueChange = {username = it},
-            label = { Text("Username")},
+            label = { Text("Username", style = MaterialTheme.typography.body1)},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             leadingIcon = {Icon(Icons.Outlined.Person, contentDescription = null)},
             modifier = Modifier
                 .width(280.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.White,
+                focusedBorderColor = colorResource(id = R.color.mainbg),
                 unfocusedBorderColor = Color.Gray,
-                focusedLabelColor = Color.White,
+                focusedLabelColor = colorResource(id = R.color.mainbg),
                 unfocusedLabelColor = Color.Gray,
-                leadingIconColor = Color.White,
-                textColor = Color.White
+                leadingIconColor = colorResource(id = R.color.mainbg),
+                textColor = Color.Black
             )
 
         )
         var showPassword by remember { mutableStateOf(value = false) }
         OutlinedTextField(value = password, onValueChange = {password = it},
-            label = { Text("Password")},
+            label = { Text("Password", style = MaterialTheme.typography.body1)},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             leadingIcon = {Icon(Icons.Outlined.Lock, contentDescription = null)},
             modifier = Modifier
@@ -113,22 +136,22 @@ fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
             visualTransformation = if (showPassword) VisualTransformation.None
                 else PasswordVisualTransformation(),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.White,
+                focusedBorderColor = colorResource(id = R.color.mainbg),
                 unfocusedBorderColor = Color.Gray,
-                focusedLabelColor = Color.White,
+                focusedLabelColor = colorResource(id = R.color.mainbg),
                 unfocusedLabelColor = Color.Gray,
-                leadingIconColor = Color.White,
-                textColor = Color.White,
-                trailingIconColor = Color.Gray
+                leadingIconColor = colorResource(id = R.color.mainbg),
+                textColor = Color.Black,
+                trailingIconColor = colorResource(id = R.color.mainbg)
             ),
             trailingIcon = {
                 if (showPassword) {
                     TextButton(onClick = { showPassword = false }) {
-                        Text(text = "hide", color = Color.White)
+                        Text(text = "hide", color = colorResource(id = R.color.mainbg))
                     }
                 } else {
                     TextButton(onClick = { showPassword = true }) {
-                        Text(text = "show", color = Color.White)
+                        Text(text = "show", color = colorResource(id = R.color.mainbg))
                     }
                 }
             }
@@ -144,7 +167,7 @@ fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
                 onClick = {
                     context.startActivity(Intent(context, RegisterActivity::class.java))
                 },
-                border = BorderStroke(1.dp, Color.Green),
+                border = BorderStroke(1.dp, color = colorResource(id = R.color.mainbg)),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
@@ -152,10 +175,11 @@ fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
                     .width(150.dp)
                     .height(40.dp)
             ) {
-                Text(text = "Sign Up",
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.ExtraBold)
+                Text(text = "Sign-Up",
+                    color = colorResource(id = R.color.mainbg),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    style = MaterialTheme.typography.body1)
             }
             Spacer(modifier = Modifier.width(30.dp))
 
@@ -181,17 +205,18 @@ fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
                         error = "Please fill all fields"
                     }
                 },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green),
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.mainbg)),
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
                     .padding(5.dp)
                     .width(150.dp)
                     .height(40.dp)
             ) {
-                Text(text = "Sign In",
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.ExtraBold
+                Text(text = "Sign-In",
+                    color = Color.White,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    style = MaterialTheme.typography.body1,
                 )
             }
         }
@@ -213,5 +238,6 @@ fun LoginScreen(context: Context, databaseHelper: UserDatabaseHelper) {
 @Composable
 fun DefaultPreview2() {
     MemoVerseTheme {
+        LoginActivity()
     }
 }

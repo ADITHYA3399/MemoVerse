@@ -12,4 +12,6 @@
     <color name="top2">#17594A</color>
     <color name="top3">#8EAC50</color>
     <color name="top4">#1F6E8C</color>
+    <color name="mainbg">#e0ab2c</color>
+    <color name="bodybg">#FAEAC4</color>
 </resources>
