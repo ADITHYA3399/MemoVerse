@@ -17,6 +17,8 @@ AYAN SAMANTHA - </br>
 
 Video Link: https://drive.google.com/file/d/1w9R51qHaM_cvqHq4D-WI1xqDhzoOPjaG/view?usp=sharing </br></br>
 
+Report Link: </br></br>
+
 App Ui:</br>
 <img src="https://github.com/ADITHYA3399/MemoVerse/assets/88793514/00b02660-96e0-4380-a1dd-62c6f073ccc0" height = 397 width = 188><br /><br />   
 <img src="https://github.com/ADITHYA3399/MemoVerse/assets/88793514/97eef3f4-b28b-4401-8fe5-924d58abf628" height = 397 width = 188><br /><br />     
