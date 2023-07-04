@@ -6,18 +6,18 @@ NERELLA ADITHYA - 20BCE7473</br>
 * Week-03: https://drive.google.com/drive/folders/195aMWcDWb5SVZrGsMNXlv3YcyhZyzqsm?usp=sharing </br></br>
 
 MADDIKERI NARENDRANATH REDDY - 20BCE7114</br>
-* WeeK-01:  </br>
+* WeeK-01: https://drive.google.com/file/d/1z1CV8UWfL7fEhzsAAPtR3swIVDtiqBEr/view?usp=sharing </br>
 * Week-02:  </br>
-* Week-03:  </br></br>
+* Week-03: https://drive.google.com/file/d/1_aPJFF1Sag7BfYF0NTOmmd5JvoooYvMV/view?usp=sharing </br></br>
 
 AYAN SAMANTHA - </br>
 * WeeK-01:  </br>
 * Week-02:  </br>
 * Week-03:  </br></br>
 
-Video Link: https://drive.google.com/file/d/1w9R51qHaM_cvqHq4D-WI1xqDhzoOPjaG/view?usp=sharing </br></br>
+Video Link: https://drive.google.com/file/d/15Jxd1RNhvPFP0Jrk7oT4xEcKGlLnOGUT/view?usp=drive_link </br></br>
 
-Report Link: </br></br>
+Report Link: https://drive.google.com/file/d/1JOzGb1jbm2Yg9hEiMiMRnirTlTfJ2wey/view?usp=drive_link </br></br>
 
 App Ui:</br>
 <img src="https://github.com/ADITHYA3399/MemoVerse/assets/88793514/00b02660-96e0-4380-a1dd-62c6f073ccc0" height = 397 width = 188><br /><br />   
